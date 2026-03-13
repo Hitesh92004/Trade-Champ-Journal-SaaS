@@ -1,0 +1,5 @@
+# Keep image assets treated as binary to avoid noisy or unsupported textual diffs in PR tools.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
