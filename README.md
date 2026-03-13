@@ -95,6 +95,27 @@ RLS policies are enabled so users can access only their own rows.
 All protected endpoints expect `Authorization: Bearer <supabase_jwt>`.
 
 
+## Render Deployment (Backend)
+
+Recommended: deploy backend as a Render **Web Service** from subdirectory `trade-champ/backend`.
+
+This repo includes a `render.yaml` blueprint with:
+- `rootDir: trade-champ/backend`
+- build command: `pip install -r requirements.txt`
+- start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+
+Required Render env vars:
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `MT5_CREDENTIAL_SECRET`
+- `CORS_ORIGINS` (set to your Vercel URL, optionally comma-separated with localhost)
+
+Build-stuck troubleshooting:
+- Ensure Render **Root Directory** is `trade-champ/backend`.
+- Ensure start command uses `$PORT` (not fixed `8000`).
+- Backend requirements intentionally exclude `MetaTrader5`; that package should stay in `workers/requirements.txt` because it commonly fails on Linux cloud builders.
+
 ## Vercel Deployment (Frontend)
 
 If you deploy this repository directly to Vercel, the Next.js app lives in a subdirectory.

@@ -9,3 +9,8 @@
 ## Asset note
 
 Branding is consumed from `frontend/public/logo.png`. Keep the asset local for runtime and avoid unnecessary binary-file churn in PRs when possible.
+
+
+## Deployment blueprint
+
+- `render.yaml` provides a Render Web Service blueprint for the FastAPI backend in `trade-champ/backend`.

@@ -4,4 +4,3 @@ python-dotenv==1.0.1
 supabase==2.9.1
 pydantic==2.9.2
 cryptography==43.0.1
-MetaTrader5==5.0.45
