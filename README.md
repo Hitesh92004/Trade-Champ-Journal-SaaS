@@ -94,6 +94,21 @@ RLS policies are enabled so users can access only their own rows.
 
 All protected endpoints expect `Authorization: Bearer <supabase_jwt>`.
 
+
+## Vercel Deployment (Frontend)
+
+If you deploy this repository directly to Vercel, the Next.js app lives in a subdirectory.
+This repo includes a root `vercel.json` that points Vercel to `trade-champ/frontend/package.json`.
+
+Required Vercel Environment Variables for the frontend project:
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `NEXT_PUBLIC_API_URL`
+
+Important:
+- The FastAPI backend and MT5 worker are **not** deployed by Vercel in this setup.
+- Deploy backend/worker separately (for example Railway/Render/Fly.io) and set `NEXT_PUBLIC_API_URL` to that backend URL.
+
 ## Docker (Full Stack)
 
 ```bash
