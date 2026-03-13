@@ -1,15 +1,15 @@
 # Trade Champ
 
-Trade Champ is a full-stack SaaS trading journal for MetaTrader 5 traders. It provides automatic trade syncing, analytics dashboards, journaling, and prop-firm risk tracking.
+Trade Champ is a full-stack SaaS trading journal for MetaTrader 5 traders. It includes Supabase auth, MT5 account connection, automated trade sync worker, analytics dashboard, journaling, and prop-firm tracking.
 
 ## Project Structure
 
 ```bash
 trade-champ/
-  frontend/   # Next.js 14 + TypeScript + Tailwind + Recharts
-  backend/    # FastAPI services
-  workers/    # MT5 sync worker
-  database/   # Supabase SQL schema and RLS
+  frontend/   # Next.js 14 + TypeScript + Tailwind + ShadCN-style UI + Recharts
+  backend/    # FastAPI API with Supabase-backed services
+  workers/    # MT5 sync worker service
+  database/   # Supabase PostgreSQL schema + RLS policies
   docker/     # Docker Compose stack
   docs/       # Architecture notes
 ```
@@ -20,17 +20,27 @@ trade-champ/
 - Python 3.11+
 - Docker + Docker Compose (optional)
 - Supabase project
-- MetaTrader 5 terminal/API environment
+- MetaTrader 5 terminal/API runtime
 
 ## Local Setup
 
-1. Copy environment template:
+1. Copy env file:
    ```bash
    cp trade-champ/.env.example trade-champ/.env
    ```
-2. Fill in Supabase and MT5 secrets in `trade-champ/.env`.
-3. Place your brand logo at:
+2. Fill values in `trade-champ/.env`.
+3. Put your official brand logo at:
    - `trade-champ/frontend/public/logo.png`
+
+
+## Logo Asset Workflow (important for PRs)
+
+Some PR systems do not render binary diffs (for example `logo.png`).
+
+Recommended workflow:
+- Keep app code referencing `trade-champ/frontend/public/logo.png`.
+- Add or replace `logo.png` locally when running the app.
+- Avoid frequent logo binary edits in code-review PRs unless explicitly required.
 
 ## Run Frontend
 
@@ -62,16 +72,27 @@ python sync_worker.py
 
 ## Database Setup (Supabase)
 
-Run `trade-champ/database/schema.sql` in Supabase SQL editor.
+Run `trade-champ/database/schema.sql` in the Supabase SQL editor.
 
-This creates:
+Tables created:
 - `users`
 - `mt5_accounts`
 - `trades`
 - `strategies`
 - `prop_settings`
 
-with Row Level Security policies so users only access their own data.
+RLS policies are enabled so users can access only their own rows.
+
+## API Endpoints
+
+- `GET /api/health`
+- `POST /api/mt5/connect`
+- `GET /api/dashboard/overview`
+- `GET /api/trades`
+- `GET /api/trades/{id}`
+- `PUT /api/prop-settings`
+
+All protected endpoints expect `Authorization: Bearer <supabase_jwt>`.
 
 ## Docker (Full Stack)
 
@@ -82,16 +103,16 @@ docker compose up --build
 
 Services:
 - Frontend: `http://localhost:3000`
-- Backend API: `http://localhost:8000/api/health`
-- Worker: background MT5 sync service
+- Backend: `http://localhost:8000`
+- Worker: periodic MT5 sync service
 
-## Key Features Included
+## Included Product Modules
 
-- Supabase Auth-ready login/signup screens
-- MT5 account connection API endpoint
-- Automated worker-based MT5 trade sync skeleton
-- Trade dashboard with core SaaS metrics
-- Trade list + filters + detail journaling page
-- Strategy tagging support
-- Prop firm tracker module
-- Supabase Storage-ready screenshot field (`screenshot_url`)
+- Supabase signup/login auth forms
+- MT5 account connection flow with encrypted password storage
+- Automated MT5 trade sync worker
+- Dashboard metrics + equity chart
+- Trades table with filtering
+- Trade detail journal view with screenshot upload field
+- Strategy tagging model support
+- Prop-firm guardrails tracking model
