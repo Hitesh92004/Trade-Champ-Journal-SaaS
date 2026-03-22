@@ -14,3 +14,5 @@ Branding is consumed from `frontend/public/logo.png`. Keep the asset local for r
 ## Deployment blueprint
 
 - `render.yaml` provides a Render Web Service blueprint for the FastAPI backend in `trade-champ/backend`.
+
+- Backend runtime is pinned to Python 3.11 for Render compatibility (`trade-champ/backend/runtime.txt`, `render.yaml`).

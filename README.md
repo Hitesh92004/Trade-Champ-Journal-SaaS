@@ -101,7 +101,7 @@ Recommended: deploy backend as a Render **Web Service** from subdirectory `trade
 
 This repo includes a `render.yaml` blueprint with:
 - `rootDir: trade-champ/backend`
-- build command: `pip install -r requirements.txt`
+- build command: `pip install --upgrade pip setuptools wheel && pip install -r requirements.txt`
 - start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 
 Required Render env vars:
@@ -115,6 +115,8 @@ Build-stuck troubleshooting:
 - Ensure Render **Root Directory** is `trade-champ/backend`.
 - Ensure start command uses `$PORT` (not fixed `8000`).
 - Backend requirements intentionally exclude `MetaTrader5`; that package should stay in `workers/requirements.txt` because it commonly fails on Linux cloud builders.
+- Pin Python to 3.11.x on Render (the blueprint sets `PYTHON_VERSION=3.11.9`; backend also ships `runtime.txt`).
+- If you see `pydantic-core` / `maturin` / `cargo` errors with Python 3.14, switch Render Python to 3.11 and redeploy.
 
 ## Vercel Deployment (Frontend)
 
