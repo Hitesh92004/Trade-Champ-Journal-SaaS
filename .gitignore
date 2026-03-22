@@ -1,0 +1,9 @@
+node_modules/
+.next/
+__pycache__/
+*.pyc
+.env
+.venv/
+
+# Local brand asset (keep out of PR diffs)
+trade-champ/frontend/public/logo.png
